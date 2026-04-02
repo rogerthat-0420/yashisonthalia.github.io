@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Yashi | Therapist</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:           #f4f8f3;
+    --nav-bg:       #dde8d8;
+    --nav-text:     #3d5c38;
+    --hero-bg:      #e8f0e5;
+    --hero-text:    #2e4a29;
+    --accent:       #6b9b61;
+    --accent-light: #c5dbbf;
+    --section-alt:  #eef4eb;
+    --card-bg:      #ffffff;
+    --text-dark:    #2a3d26;
+    --text-mid:     #4a6645;
+    --text-light:   #7a9975;
+    --border:       #ccdec8;
+    --counter-bg:   #d5e8cf;
+    --counter-num:  #3a6134;
+    --btn-bg:       #6b9b61;
+    --btn-text:     #ffffff;
+    --footer-bg:    #2e4a29;
+    --footer-text:  #d5e8cf;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background-color: var(--bg);
+    color: var(--text-dark);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 60px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400;
+    color: var(--nav-text); text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-right { position: relative; }
+  .nav-toggle {
+    background: none; border: 1.5px solid var(--nav-text);
+    color: var(--nav-text); font-family: 'Jost', sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.45rem 1.1rem; border-radius: 2rem; cursor: pointer;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-toggle:hover { background: var(--nav-text); color: #fff; }
+  .nav-toggle svg { width: 14px; height: 14px; transition: transform 0.3s; }
+  .nav-toggle.open svg { transform: rotate(180deg); }
+  .dropdown-menu {
+    display: none; position: absolute; top: calc(100% + 10px); right: 0;
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; min-width: 210px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    animation: dropIn 0.2s ease;
+  }
+  .dropdown-menu.open { display: block; }
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .dropdown-menu a {
+    display: block; padding: 0.75rem 1.4rem;
+    color: var(--text-dark); text-decoration: none;
+    font-size: 0.88rem; letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s, color 0.15s;
+  }
+  .dropdown-menu a:last-child { border-bottom: none; }
+  .dropdown-menu a:hover { background: var(--section-alt); color: var(--accent); }
+
+  section { padding: 90px 2rem 70px; }
+  section:nth-child(even) { background: var(--section-alt); }
+  .container { max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-light); margin-bottom: 0.5rem;
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 400; color: var(--hero-text);
+    line-height: 1.2; margin-bottom: 1.5rem;
+  }
+  p { color: var(--text-mid); margin-bottom: 1rem; font-size: 0.97rem; }
+
+  #hero {
+    background: var(--hero-bg);
+    min-height: 100vh; display: flex; align-items: center; padding-top: 60px;
+  }
+  .hero-inner { max-width: 750px; margin: 0 auto; text-align: center; padding: 4rem 1rem; }
+  .hero-tag {
+    display: inline-block; background: var(--accent-light);
+    color: var(--text-dark); font-size: 0.75rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.35rem 1rem; border-radius: 2rem; margin-bottom: 1.5rem;
+  }
+  .hero-inner h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    font-weight: 300; color: var(--hero-text); line-height: 1.1; margin-bottom: 1rem;
+  }
+  .hero-inner h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 1.05rem; color: var(--text-mid); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.8; }
+  .btn {
+    display: inline-block; background: var(--btn-bg); color: var(--btn-text);
+    text-decoration: none; padding: 0.8rem 2rem; border-radius: 2rem;
+    font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: opacity 0.2s, transform 0.2s; border: none; cursor: pointer; font-family: 'Jost', sans-serif;
+  }
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-outline {
+    background: none; border: 1.5px solid var(--btn-bg);
+    color: var(--btn-bg); margin-left: 0.8rem;
+  }
+  .btn-outline:hover { background: var(--btn-bg); color: #fff; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  @media(max-width:640px){ .about-grid { grid-template-columns: 1fr; } }
+  .about-card {
+    background: var(--card-bg); border-radius: 16px;
+    padding: 2rem; border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .about-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 500; color: var(--hero-text); margin-bottom: 0.8rem;
+  }
+
+  #numbers { background: var(--counter-bg); }
+  .numbers-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; text-align: center; }
+  @media(max-width:580px){ .numbers-grid { grid-template-columns: 1fr; } }
+  .stat-box {
+    background: var(--card-bg); border-radius: 16px;
+    padding: 2.5rem 1.5rem; border: 1px solid var(--border);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 400; color: var(--counter-num); line-height: 1; display: inline;
+  }
+  .stat-label {
+    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-light); margin-top: 0.5rem; display: block;
+  }
+
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1.5rem; }
+  .service-card {
+    background: var(--card-bg); border-radius: 16px;
+    padding: 2rem; border: 1px solid var(--border);
+    transition: box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .service-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-3px); }
+  .service-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 500; color: var(--hero-text); margin-bottom: 0.6rem;
+  }
+
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.5rem; }
+  .testi-card {
+    background: var(--card-bg); border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0; padding: 1.5rem;
+    font-size: 0.9rem; color: var(--text-mid); font-style: italic; line-height: 1.8;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  }
+  .testi-card::before {
+    content: '\201C'; font-size: 2.5rem; color: var(--accent-light);
+    font-family: 'Cormorant Garamond', serif; line-height: 0.8; display: block; margin-bottom: 0.5rem;
+  }
+
+  .faq-item { border-bottom: 1px solid var(--border); padding: 1.1rem 0; }
+  .faq-question {
+    width: 100%; background: none; border: none; text-align: left; cursor: pointer;
+    font-family: 'Jost', sans-serif; font-size: 0.97rem; color: var(--text-dark);
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0; font-weight: 400;
+  }
+  .faq-question svg { flex-shrink: 0; transition: transform 0.3s; color: var(--accent); }
+  .faq-question.open svg { transform: rotate(45deg); }
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; font-size: 0.9rem; color: var(--text-mid); }
+  .faq-answer.open { max-height: 300px; padding-top: 0.7rem; }
+
+  #contact { background: var(--hero-bg); }
+  .contact-inner { text-align: center; max-width: 560px; margin: 0 auto; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+
+  footer {
+    background: var(--footer-bg); color: var(--footer-text);
+    text-align: center; padding: 2rem 1rem;
+    font-size: 0.82rem; letter-spacing: 0.08em;
+  }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">Yashi</a>
+  <div class="nav-right">
+    <button class="nav-toggle" id="navToggle">
+      Menu
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4,6 8,10 12,6"/></svg>
+    </button>
+    <div class="dropdown-menu" id="dropdownMenu">
+      <a href="#about">About</a>
+      <a href="#numbers">Numbers</a>
+      <a href="#services">Services</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#faq">FAQs</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">Therapist · Supervisor · Facilitator</span>
+    <h1>A place to<br/><em>pause & explore</em></h1>
+    <p class="hero-sub">Therapy here is collaborative, grounded, and warmly human. You don't need to have it figured out — that's what we're here for.</p>
+    <a href="#contact" class="btn">Get in Touch</a>
+    <a href="#about" class="btn btn-outline">Learn More</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <p class="section-label reveal">Who I am</p>
+    <h2 class="reveal">Hi, I'm Yashi.</h2>
+    <div class="about-grid">
+      <div class="reveal">
+        <p>I'm a therapist who believes that healing doesn't always have to look heavy, serious, or perfectly put together.</p>
+        <p>Therapy, in my space, is a place to pause. To get curious. To laugh a little (sometimes at ourselves). To notice what your mind has been doing on autopilot and gently invite your body and emotions back into the conversation.</p>
+        <p>My approach is compassionate, collaborative, and grounded. I don't sit as an expert with answers — we figure things out together. The work is paced, ethical, and deeply respectful of your lived experience.</p>
+      </div>
+      <div class="reveal">
+        <div class="about-card">
+          <h3>My Practice</h3>
+          <p>Trained mental health professional with <strong>4 years of experience</strong> working with individuals navigating emotional, relational, and psychological concerns.</p>
+          <p>I hold a Master's in Psychology (Counseling specialization) and am trained in Art Therapy and Couples & Family Therapy.</p>
+          <p style="margin-bottom:0">My practice is guided by Transactional Analysis, narrative ideas, art-based practices, and threads of CBT, DBT, and SFBT — on a client-centered foundation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="numbers">
+  <div class="container">
+    <p class="section-label reveal" style="text-align:center">By the numbers</p>
+    <h2 class="reveal" style="text-align:center">The journey so far</h2>
+    <div class="numbers-grid">
+      <div class="stat-box reveal">
+        <span class="stat-num counter" data-target="2400">0</span><span class="stat-num">+</span>
+        <div class="stat-label">Therapy Sessions</div>
+      </div>
+      <div class="stat-box reveal">
+        <span class="stat-num counter" data-target="340">0</span><span class="stat-num">+</span>
+        <div class="stat-label">Clients</div>
+      </div>
+      <div class="stat-box reveal">
+        <span class="stat-num counter" data-target="120">0</span><span class="stat-num">+</span>
+        <div class="stat-label">Students</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <p class="section-label reveal">What I offer</p>
+    <h2 class="reveal">Services</h2>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">🌿</div>
+        <h3>Individual Therapy</h3>
+        <p>One-on-one sessions for adults to explore their inner world with honesty and support. Collaborative, reflective, and paced with care.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🤝</div>
+        <h3>Couples Therapy</h3>
+        <p>A space to slow down reactive patterns, explore emotional needs, and build healthier ways of relating. Online sessions available.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📚</div>
+        <h3>Supervision</h3>
+        <p>For Master's students and early-career therapists. Focused on case conceptualization, therapeutic presence, ethics, and your growth as a therapist.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🧊</div>
+        <h3>Ice Plunge Workshops</h3>
+        <p>Guided experiences focused on body awareness, courage, and joy — not endurance. Offered as workshops, group sessions, or private bookings.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🌸</div>
+        <h3>Group Spaces</h3>
+        <p>Facilitated group spaces for reflection and shared learning — year diaries, bring-your-own-friend, and group art therapy. Grounded in safety and confidentiality.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="container">
+    <p class="section-label reveal">Words from clients</p>
+    <h2 class="reveal">Testimonials</h2>
+    <div class="testi-grid">
+      <div class="testi-card reveal">Yashi is really patient, a wonderful listener and makes sure all points are duly noted while I'm sharing my concerns. I truly appreciate how impartial her responses are — she gives her views from a neutral standpoint which makes it really easy to form my own opinion.</div>
+      <div class="testi-card reveal">I love how observant you are, and how quickly you identify patterns and help me dig deeper into understanding them, making me ask questions to myself. Your insights hit the nail on the head.</div>
+      <div class="testi-card reveal">She is non-judgemental, intuitive, astute and asks such pertinent questions that it is impossible not to shift the lens and go from being a victim to being empowered. I love every minute of my time with her.</div>
+      <div class="testi-card reveal">From the 1st day, I could open up. She made sure I felt comfortable to express myself. Yashi is one of the biggest reasons I have been able to get through this year. Without her help I couldn't have kept myself together.</div>
+      <div class="testi-card reveal">Feels very uplifted and light, when communicated about untouched stories within. Just speaking to my inner goddess with external support from Yashi — to hold, support, and understand — makes it feel very relieving.</div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container" style="max-width:680px">
+    <p class="section-label reveal">Got questions?</p>
+    <h2 class="reveal">FAQs</h2>
+    <div class="reveal">
+      <div class="faq-item">
+        <button class="faq-question">When is the right time to start therapy?<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-answer">There isn't a "perfect" time. Therapy can be helpful when something feels overwhelming, stuck, confusing, or simply different than before — even if you can't clearly name why. Wanting more awareness, support, or change is reason enough.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What is your therapy approach?<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-answer">My practice is guided by Transactional Analysis, narrative ideas, art-based practices, and threads of CBT, DBT, and SFBT on a client-centered foundation. I bring in conversation, humor, metaphors, mindfulness, art, and gentle challenges when needed.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What does a typical therapy session look like?<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-answer">Sessions are conversational and reflective. We may talk, explore emotions, notice patterns, use metaphors, or work with mindfulness or expressive tools — always at a pace that feels safe. Sessions last 50–60 minutes.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Do you offer online or in-person sessions?<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-answer">Therapy sessions are offered online. Workshops, group spaces, and ice plunge experiences may be in-person, depending on the format.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Is therapy confidential?<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-answer">Yes. Sessions are confidential, with legal exceptions related to safety. These limits are explained clearly at the start.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">I've never been to therapy — is that okay?<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-answer">Absolutely. You don't need prior experience. We take it one step at a time.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What should I know about the ice plunge experience?<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-answer">Ice plunge sessions are guided, structured, and safety-focused. They emphasize body awareness and regulation — not endurance.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What if I'm not sure this is the right fit?<svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg></button>
+        <div class="faq-answer">That's okay. Fit matters in therapy, and it's always open for conversation and reassessment at any stage.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner reveal">
+      <p class="section-label">Reach out</p>
+      <h2>Let's connect</h2>
+      <p>Whether you have questions, want to explore if therapy is right for you, or are ready to book — I'd love to hear from you.</p>
+      <div class="contact-links">
+        <a href="mailto:reachouttoyashi@gmail.com" class="btn">Email Me</a>
+        <a href="https://forms.gle/9LEinq1aSGWFYeZH9" target="_blank" class="btn btn-outline">Therapy Inquiry Form</a>
+      </div>
+      <p style="margin-top:1.5rem; font-size:0.85rem; color:var(--text-light)">reachouttoyashi@gmail.com</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Yashi &nbsp;·&nbsp; Made with care</p>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+  navToggle.addEventListener('click', () => {
+    const open = dropdownMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+  });
+  document.querySelectorAll('.dropdown-menu a').forEach(a => {
+    a.addEventListener('click', () => {
+      dropdownMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!navToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+      dropdownMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+    }
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => revealObs.observe(el));
+
+  const counters = document.querySelectorAll('.counter');
+  let countersStarted = false;
+  const counterObs = new IntersectionObserver(entries => {
+    if (entries.some(e => e.isIntersecting) && !countersStarted) {
+      countersStarted = true;
+      counters.forEach(el => {
+        const target = +el.dataset.target;
+        const step = target / (1800 / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = Math.floor(current).toLocaleString();
+        }, 16);
+      });
+    }
+  }, { threshold: 0.3 });
+  counters.forEach(c => counterObs.observe(c));
+
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      const open = answer.classList.toggle('open');
+      btn.classList.toggle('open', open);
+    });
+  });
+</script>
+</body>
+</html>
